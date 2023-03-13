@@ -1,0 +1,39 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+    provider = "prisma-client-js"
+}
+
+datasource db {
+    provider = "mysql"
+    url      = env("DATABASE_URL")
+}
+
+model Airport {
+    code            String @id
+    city            String
+    name            String
+    outboundFlights Flight[] @relation("origin")
+    inboundFlights  Flight[] @relation("destination")
+}
+
+model Flight {
+    id            String @id @default(cuid())
+    flightNumber  String
+    origin        Airport @relation("origin", fields: [originId], references: [code])
+    originId      String
+    destination   Airport @relation("destination", fields: [destinationId], references: [code])
+    destinationId String
+    departureAt   DateTime
+    arrivalAt     DateTime
+    capacity      Int
+    passengers    Passenger[]
+}
+
+model Passenger {
+    id        String @id @default(cuid())
+    surname   String
+    givenName String
+    flights   Flight[]
+}

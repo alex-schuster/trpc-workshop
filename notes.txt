@@ -1,0 +1,1 @@
+docker run --detach --name trpc-ws --publish 3306:3306 --env MARIADB_USER=admin --env MARIADB_PASSWORD=12345 --env MARIADB_ROOT_PASSWORD=12345 --env MARIADB_DATABASE=trpc-ws mariadb:latest
