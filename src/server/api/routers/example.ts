@@ -10,9 +10,9 @@ export const exampleRouter = createTRPCRouter({
       };
     }),
   getAll: publicProcedure.query(({ ctx }) => {
-    return ctx.prisma.example.findMany();
+    return ctx.prisma.flight.findMany();
   }),
-  createExample: publicProcedure
-    .output(z.object({ id: z.string() }))
-    .mutation(async ({ ctx }) => ctx.prisma.example.create({ data: {} }))
+  // createExample: publicProcedure
+  //   .output(z.object({ id: z.string() }))
+  //   .mutation(async ({ ctx }) => ctx.prisma.example.create({ data: {} }))
 });

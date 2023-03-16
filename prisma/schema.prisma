@@ -29,6 +29,7 @@ model Flight {
     arrivalAt     DateTime
     capacity      Int
     passengers    Passenger[]
+    price         Int
 }
 
 model Passenger {
