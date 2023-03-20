@@ -2,7 +2,11 @@
 const config = {
   content: ["./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        primary: "#2766c5",
+      },
+    },
   },
   plugins: [require("daisyui")],
 };

@@ -10,52 +10,48 @@ const FlightElement: React.FC<FlightProps> = ({ flight }) => {
   // bookFlight procedure hier
   const bookFlight = (flight: Flight) => {
     console.log("bookFlight", flight);
+    console.log("bookFlight", JSON.stringify(flight));
   };
 
   return (
-    <li>
-      <div className="card rounded-box my-4 bg-slate-900 text-white">
-        <div className="card-body flex flex-row items-center justify-center">
-          <div className="flex w-1/5 flex-col">
-            <span className="badge-primary badge">{flight.flightNumber}</span>
-            <div className="flex flex-row justify-center text-4xl">
-              <div className="from mr-10 flex flex-col justify-center">
-                <span>Date:</span>
-                <span>{moment(flight.departureAt).format("dd.mm.yyyy")}</span>
-              </div>
-            </div>
-          </div>
-          <div className="flex w-3/5 flex-col">
-            <div className="flex flex-row justify-center text-4xl">
-              <div className="from flex flex-col justify-center text-center">
-                <span>{flight.originId}</span>
-                <span>{moment(flight.departureAt).format("HH:mm")}</span>
-              </div>
-              <div className="from mx-10 flex flex-col justify-center text-center">
-                -
-              </div>
-              <div className="to flex flex-col justify-center text-center">
-                <span>{flight.destinationId}</span>
-                <span>{moment(flight.arrivalAt).format("HH:mm")}</span>
-              </div>
-            </div>
-          </div>
-          <div className="w-1/5 text-2xl">
-            <div className="to flex flex-col justify-center text-center">
-              <span>Flight Time:</span>
-              <span>
-                {moment
-                  .duration(
-                    moment(flight.arrivalAt).diff(moment(flight.departureAt))
-                  )
-                  .humanize()}
+    <li className="w-100">
+      <div className="card mb-4 bg-slate-800 p-4 hover:cursor-pointer hover:bg-slate-900">
+        <div className="grid grid-cols-1 items-center gap-4 md:grid-cols-2 lg:grid-cols-4">
+          <div className="col-span-1">
+            <p className="text-xl font-bold">
+              <span className=" chip hidden rounded-md bg-primary py-1 px-2 font-bold text-white md:inline">
+                {flight.flightNumber}
               </span>
-            </div>
+              <span className="chip rounded-md bg-primary py-1 px-2 font-bold  text-white md:hidden">
+                {flight.flightNumber}
+              </span>
+            </p>
+            <br />
+            <p className="text-gray-500 md:hidden">{flight.originId}</p>
+            <p className="text-gray-500">
+              {moment(flight.departureAt).format("LT")} -{" "}
+              {moment(flight.arrivalAt).format("LT")}
+            </p>
           </div>
-          <div className="flex flex-col justify-end text-center">
-            <span className="mb-2 text-xl font-bold">{flight.price} €</span>
+          <div className="col-span-1 hidden md:block">
+            <p className="text-3xl font-bold">{flight.originId}</p>
+            <p className="text-gray-500">to</p>
+            <p className="text-3xl font-bold">{flight.destinationId}</p>
+          </div>
+          <div className="col-span-1">
+            <p className="text-2xl font-bold">
+              Capacity:{" "}
+              <span className="font-normal">
+                {flight.capacity} / {flight.capacity}
+              </span>
+            </p>
+            <p className="text-gray-500 md:hidden">{flight.destinationId}</p>
+          </div>
+          <div className="col-span-1 flex items-center justify-end">
+            <p className="text-gray-500">Price:</p>
+            <p className="ml-2 text-xl font-bold">{flight.price}€</p>
             <button
-              className="btn-primary btn"
+              className="btn-primary btn ml-4"
               onClick={() => bookFlight(flight)}
             >
               Book now

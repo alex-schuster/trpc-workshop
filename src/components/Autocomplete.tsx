@@ -6,7 +6,7 @@ type AutocompleteProps = {
   id: string;
   airports: Airport[];
   placeHolder?: string;
-  handleSelectOption: (value: Airport) => void;
+  handleSelectOption: (value: Airport | null) => void;
 };
 
 const Autocomplete = ({
@@ -17,7 +17,6 @@ const Autocomplete = ({
 }: AutocompleteProps) => {
   const ref = useRef<HTMLDivElement>(null);
   const [inputValue, setInputValue] = useState("");
-  const [selectedOption, setSelectedOption] = useState<Airport | null>(null);
   const [filteredAirports, setFilteredAirports] = useState<Airport[]>([]);
   const [open, setOpen] = useState(false);
 
@@ -29,6 +28,7 @@ const Autocomplete = ({
     setInputValue(value);
     if (!value) {
       setFilteredAirports([]);
+      handleSelectOption(null);
       return;
     }
     filterAirports(value);
@@ -43,6 +43,7 @@ const Autocomplete = ({
   };
 
   useEffect(() => {
+    setFilteredAirports([]);
     setOpen(false);
   }, [handleSelectOption]);
 
@@ -66,7 +67,7 @@ const Autocomplete = ({
         tabIndex={0}
       />
       <div
-        className="dropdown-content top-14 max-h-96 flex-col overflow-auto rounded-md bg-base-200"
+        className="dropdown-content top-20 max-h-96 flex-col overflow-auto rounded-md bg-base-200"
         // style={{ display: open ? "block" : "none" }}
       >
         <ul
