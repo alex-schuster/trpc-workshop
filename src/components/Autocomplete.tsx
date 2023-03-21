@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 
 type AutocompleteProps = {
   id: string;
-  airports: Airport[];
+  airports: Airport[] | undefined;
   placeHolder?: string;
   handleSelectOption: (value: Airport | null) => void;
 };
@@ -36,10 +36,10 @@ const Autocomplete = ({
   };
 
   const filterAirports = (value: string) => {
-    const filteredAirports = airports.filter((airport) => {
+    const filteredAirports = airports?.filter((airport) => {
       return airport.code.toLowerCase().includes(value.toLowerCase());
     });
-    setFilteredAirports(filteredAirports);
+    setFilteredAirports(filteredAirports || []);
   };
 
   useEffect(() => {

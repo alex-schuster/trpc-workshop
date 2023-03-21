@@ -17,9 +17,6 @@ const filterFlightsInput = z.object({
 const filterFlights = publicProcedure
   .input(filterFlightsInput)
   .query(async ({ ctx, input }) => {
-    if (!input.originCode && !input.destinationCode) {
-      return [];
-    }
     const flights = await ctx.prisma.flight.findMany({
       where: {
         originId: input.originCode,
@@ -42,14 +39,14 @@ const filterFlights = publicProcedure
     });
   });
 
-const bookFlightInput = z.object({
-  passengerId: z.string().cuid2(),
-  flightId: z.string().cuid2(),
+const bookOrCancelFlightInput = z.object({
+  passengerId: z.string(),
+  flightId: z.string(),
 });
 
 const bookFlight = publicProcedure
-  .input(bookFlightInput)
-  .query(async ({ ctx, input }) => {
+  .input(bookOrCancelFlightInput)
+  .mutation(async ({ ctx, input }) => {
     const flight = await ctx.prisma.flight.update({
       where: { id: input.flightId },
       data: {
@@ -64,8 +61,43 @@ const bookFlight = publicProcedure
     return flight;
   });
 
+const getMyFlights = publicProcedure
+  .input(z.object({ passengerId: z.string() }))
+  .query(async ({ ctx, input }) => {
+    const flights = await ctx.prisma.flight.findMany({
+      where: {
+        passengers: {
+          some: {
+            id: input.passengerId,
+          },
+        },
+      },
+      include: { passengers: true },
+    });
+    return flights;
+  });
+
+const cancelFlight = publicProcedure
+  .input(bookOrCancelFlightInput)
+  .mutation(async ({ ctx, input }) => {
+    const flight = await ctx.prisma.flight.update({
+      where: { id: input.flightId },
+      data: {
+        passengers: {
+          disconnect: {
+            id: input.passengerId,
+          },
+        },
+      },
+      include: { passengers: true },
+    });
+    return flight;
+  });
+
 export const flightsRouter = createTRPCRouter({
   getAll,
   filterFlights,
   bookFlight,
+  getMyFlights,
+  cancelFlight,
 });
