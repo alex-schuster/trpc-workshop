@@ -14,7 +14,7 @@ const FlightElement: React.FC<FlightProps> = ({
   bookable,
 }) => {
   return (
-    <div className="card mb-4 bg-slate-800 p-4 hover:cursor-pointer hover:bg-slate-900">
+    <div className="card mb-4 bg-slate-100 p-4 hover:cursor-pointer hover:bg-slate-200">
       <div className="grid grid-cols-1 items-center gap-4 md:grid-cols-2 lg:grid-cols-4">
         <div className="col-span-1">
           <p className="text-xl font-bold">

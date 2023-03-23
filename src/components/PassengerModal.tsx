@@ -33,7 +33,7 @@ const NameModal = ({ isOpen, onClose, onSave }: Props) => {
             Given Name
           </label>
           <input
-            className="focus:shadow-outline w-full appearance-none rounded border py-2 px-3 leading-tight text-white shadow focus:outline-none"
+            className="focus:shadow-outline w-full appearance-none rounded border py-2 px-3 leading-tight text-slate-900 shadow focus:outline-none"
             id="givenName"
             type="text"
             placeholder="Enter your given name"
@@ -46,7 +46,7 @@ const NameModal = ({ isOpen, onClose, onSave }: Props) => {
             Surname
           </label>
           <input
-            className="focus:shadow-outline w-full appearance-none rounded border py-2 px-3 leading-tight text-white shadow focus:outline-none"
+            className="focus:shadow-outline w-full appearance-none rounded border py-2 px-3 leading-tight text-slate-900 shadow focus:outline-none"
             id="surname"
             type="text"
             placeholder="Enter your surname"
